@@ -3,17 +3,18 @@ package org.example
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import java.net.URI
+import java.nio.charset.Charset
 
 
-fun PrediccionMunicipioDias(id : Int) : WeatherData{
-    val urlDatos = URI(AccesoApi().PrediccionMunicipiosDias(id).datos).toURL().readText()
+fun prediccionMunicipioDias(id : Int) : WeatherDataDias{
+    val urlDatos = URI(AccesoApi().prediccionMunicipiosDias(id).datos).toURL().readText(Charset.forName("ISO-8859-1"))
     val gson = Gson()
     val jsonArray = JsonParser.parseString(urlDatos).asJsonArray
-    return gson.fromJson(jsonArray.get(0), WeatherData::class.java)
+    return gson.fromJson(jsonArray.get(0), WeatherDataDias::class.java)
 }
 
 
-data class WeatherData(
+data class WeatherDataDias(
     val origen: Origen,
     val elaborado: String,
     val nombre: String,
